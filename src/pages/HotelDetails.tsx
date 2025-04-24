@@ -34,7 +34,7 @@ export default function HotelDetails() {
       <h1 className='text-4xl font-bold'>{hotel.name}</h1>
       <p className='text-xl text-muted-foreground'>A Stash Partner Hotel</p>
       <p className='text-md text-muted-foreground'>
-        {`1501 Second Avenue, ${hotel.city}, Washington 98101 | 855.659.3655`}
+        {`1501 Second Avenue, ${hotel.city} | 855.659.3655`}
       </p>
 
       <div className='space-y-4'>
@@ -131,7 +131,7 @@ export default function HotelDetails() {
             <div className='mt-2 border-t-2'>
               <div className='mt-4 flex items-center justify-between'>
                 {hotel.has_member_rate ? (
-                  <div className='text-md outline-2 p-2 bg-white outline-[#e08923] rounded-xl text-[#54656f] font-semibold'>
+                  <div className='text-md outline-2 p-2 bg-white rounded-xl text-[#54656f] font-semibold'>
                     <span className='line-through text-gray-400 mr-2'>
                       ${hotel.daily_rate.toFixed(2)}
                     </span>
@@ -140,13 +140,13 @@ export default function HotelDetails() {
                     </span>
                   </div>
                 ) : (
-                  <div className='text-2xl font-semibold outline-2 p-2 bg-white text-[#e08923] outline-[#e08923] rounded-xl'>
-                    {hotel.daily_rate}
-                  </div>
-                )}
+                  <div className='flex justify-between items-center text-2xl font-semibold outline-2 p-2 bg-white text-[#e08923] rounded-xl w-full'>
+                    ${hotel.daily_rate}
                 <div className='text-xl text-white hover:underline outline-2 rounded-xl p-2 bg-[#e08923] font-semibold'>
                   Book
                 </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

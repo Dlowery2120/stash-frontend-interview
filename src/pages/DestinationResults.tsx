@@ -37,9 +37,8 @@ export default function DestinationResults() {
       ) : (
         <div className='grid grid-cols-1 gap-6'>
           {filteredHotels.map((hotel) => {
-            // Calculate the price (apply a discount if the hotel has a member rate)
             const price = hotel.has_member_rate
-              ? (hotel.daily_rate * 0.9).toFixed(2) // 10% discount for members
+              ? (hotel.daily_rate * 0.9).toFixed(2)
               : hotel.daily_rate.toFixed(2);
 
             return (
@@ -53,16 +52,12 @@ export default function DestinationResults() {
                     alt={hotel.name}
                     className='w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:brightness-75'
                   />
-
-                  {/* Navigation buttons for carousel */}
                   <button className='absolute top-1/2 left-2 transform -translate-y-1/2 text-[#e08923] rounded-full z-10'>
                     <ArrowBigLeft />
                   </button>
                   <button className='absolute top-1/2 right-2 transform -translate-y-1/2 bg-black/40 p-2 rounded-full text-[#e08923] z-10'>
                     <ArrowBigRight />
                   </button>
-
-                  {/* Member rate badge */}
                   {hotel.has_member_rate && (
                     <img
                       src='/images/member-rate-badge-small.png'
@@ -72,7 +67,6 @@ export default function DestinationResults() {
                   )}
                 </div>
 
-                {/* Hotel details */}
                 <div className='flex flex-col justify-between flex-1'>
                   <div className='p-4'>
                     <h3 className='text-[38px] font-bold leading-10'>
@@ -80,12 +74,11 @@ export default function DestinationResults() {
                     </h3>
                     <p className='text-3xl'>{hotel.city}</p>
                     <p className='text-xl mt-2'>
-                      {/* Randomized rating */}
                       <span className='text-[#e08923]'>
                         {(Math.random() * (5.0 - 3.5) + 3.5).toFixed(1)}
                       </span>{' '}
-                      ({Math.floor(Math.random() * (999 - 50 + 1)) + 50} reviews
-                      ) | {/* Randomized distance */}
+                      ({Math.floor(Math.random() * (999 - 50 + 1)) + 50}{' '}
+                      reviews) |{' '}
                       <span className='text-[#e08923]'>
                         {(Math.random() * 10).toFixed(1)}
                       </span>{' '}
@@ -93,31 +86,55 @@ export default function DestinationResults() {
                     </p>
                   </div>
 
-                  {/* Pricing and "View Details" button */}
                   <div className='mt-2 border-t-2'>
-                    <div className='flex items-center justify-between px-4 py-4'>
-                      {hotel.has_member_rate ? (
-                        // Member rate pricing
-                        <div className='text-md outline-2 p-2 bg-white outline-[#e08923] rounded-xl text-[#54656f] font-semibold'>
-                          <span className='line-through text-gray-400 mr-2'>
-                            ${hotel.daily_rate.toFixed(2)}
-                          </span>
-                          <span className='text-[#e08923] font-semibold text-2xl'>
-                            ${price}
-                          </span>
-                        </div>
-                      ) : (
-                        <div className='text-2xl font-semibold  outline-2 p-2 bg-white text-[#e08923] outline-[#e08923] rounded-xl'>
-                          ${price}
+                    <div className='flex items-center justify-between px-4 py-2'>
+                      {!hotel.has_member_rate && (
+                        <div className='flex justify-between items-center text-2xl font-semibold outline-2 p-2 bg-white text-black rounded-xl w-full'>
+                          <div>${price}</div>
+                          <Link
+                            to={`/hotel/${hotel.id}`}
+                            className='text-sm text-white hover:underline bg-[#e08923] rounded-md px-3 py-2 inline-block font-medium'
+                          >
+                            View Details
+                          </Link>
                         </div>
                       )}
-                      <Link
-                        to={`/hotel/${hotel.id}`}
-                        className='text-xl text-white hover:underline outline-2 rounded-xl p-2 bg-[#e08923] font-semibold'
-                      >
-                        View Details
-                      </Link>
                     </div>
+
+                    {hotel.has_member_rate && (
+                      <div className='bg-[#f9f9f9] text-[#54656f] rounded-xl p-4 mx-4 mb-4 flex justify-between items-end'>
+                        <div>
+                          <h4 className='text-lg font-semibold mb-1'>
+                            Compare Savings
+                          </h4>
+                          <p className='text-sm'>
+                            Non-Member Rate:{' '}
+                            <span className='line-through text-gray-500'>
+                              ${hotel.daily_rate.toFixed(2)}
+                            </span>
+                          </p>
+                          <p className='text-sm text-[#e08923] font-semibold'>
+                            Member Rate: ${(hotel.daily_rate * 0.9).toFixed(2)}
+                          </p>
+                          <p className='text-xs mt-1 text-muted-foreground'>
+                            Save $
+                            {(
+                              hotel.daily_rate -
+                              hotel.daily_rate * 0.9
+                            ).toFixed(2)}{' '}
+                            per night with a free Stash membership.
+                          </p>
+                        </div>
+                        <div className='mt-2'>
+                          <Link
+                            to={`/hotel/${hotel.id}`}
+                            className='text-sm text-white hover:underline bg-[#e08923] rounded-md px-3 py-2 inline-block font-medium'
+                          >
+                            View Details
+                          </Link>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
