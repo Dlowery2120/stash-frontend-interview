@@ -18,8 +18,8 @@ export default function DestinationResults() {
 
   const formattedCheckin = checkin ? format(parseISO(checkin), 'LLL dd, yyyy') : 'Not selected'
   const formattedCheckout = checkout ? format(parseISO(checkout), 'LLL dd, yyyy') : 'Not selected'
-  const formattedAdults = adults ? `${adults} Adult${adults !== 1 && adults !== '1' ? 's' : ''}` : 'Not specified'
-  const formattedChildren = children ? `${children} Child${children !== 1 && children !== '1' ? 'ren' : ''}` : 'Not specified'
+  const formattedAdults = adults ? `${adults} Adult${adults !== 1 && adults !== '1' ? 's' : ''}` : 'No Adults'
+  const formattedChildren = children ? `${children} Child${children !== 1 && children !== '1' ? 'ren' : ''}` : 'No children'
 
   useEffect(() => {
     loadHotels()
