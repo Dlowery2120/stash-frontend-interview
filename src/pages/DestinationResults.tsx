@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useHotelStore } from '@/store/useHotelStore';
 import { ArrowBigLeft, ArrowBigRight } from 'lucide-react';
+
 export default function DestinationResults() {
   const { city } = useParams();
   const { hotels, loadHotels, loading } = useHotelStore();
@@ -10,8 +11,9 @@ export default function DestinationResults() {
     loadHotels();
   }, []);
 
+  // Filter hotels based on the city parameter
   const filteredHotels = useMemo(() => {
-    if (!city) return [];
+    if (!city) return []; // Return an empty array if no city is provided
     return hotels.filter(
       (hotel) =>
         hotel.city.toLowerCase() === decodeURIComponent(city).toLowerCase()
@@ -20,6 +22,7 @@ export default function DestinationResults() {
 
   return (
     <div className='w-full p-4 space-y-6'>
+      {/* Page header */}
       <h2 className='text-[42px] mb-0 text-[#e08923]'>
         The Best Independent Hotels
       </h2>
@@ -34,8 +37,9 @@ export default function DestinationResults() {
       ) : (
         <div className='grid grid-cols-1 gap-6'>
           {filteredHotels.map((hotel) => {
+            // Calculate the price (apply a discount if the hotel has a member rate)
             const price = hotel.has_member_rate
-              ? (hotel.daily_rate * 0.9).toFixed(2)
+              ? (hotel.daily_rate * 0.9).toFixed(2) // 10% discount for members
               : hotel.daily_rate.toFixed(2);
 
             return (
@@ -50,6 +54,7 @@ export default function DestinationResults() {
                     className='w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105 group-hover:brightness-75'
                   />
 
+                  {/* Navigation buttons for carousel */}
                   <button className='absolute top-1/2 left-2 transform -translate-y-1/2 text-[#e08923] rounded-full z-10'>
                     <ArrowBigLeft />
                   </button>
@@ -67,6 +72,7 @@ export default function DestinationResults() {
                   )}
                 </div>
 
+                {/* Hotel details */}
                 <div className='flex flex-col justify-between flex-1'>
                   <div className='p-4'>
                     <h3 className='text-[38px] font-bold leading-10'>
@@ -74,20 +80,24 @@ export default function DestinationResults() {
                     </h3>
                     <p className='text-3xl'>{hotel.city}</p>
                     <p className='text-xl mt-2'>
+                      {/* Randomized rating */}
                       <span className='text-[#e08923]'>
                         {(Math.random() * (5.0 - 3.5) + 3.5).toFixed(1)}
                       </span>{' '}
                       ({Math.floor(Math.random() * (999 - 50 + 1)) + 50} reviews
-                      ) |{' '}
+                      ) | {/* Randomized distance */}
                       <span className='text-[#e08923]'>
                         {(Math.random() * 10).toFixed(1)}
                       </span>{' '}
                       mi from destination
                     </p>
                   </div>
+
+                  {/* Pricing and "View Details" button */}
                   <div className='mt-2 border-t-2'>
                     <div className='flex items-center justify-between px-4 py-4'>
                       {hotel.has_member_rate ? (
+                        // Member rate pricing
                         <div className='text-md outline-2 p-2 bg-white outline-[#e08923] rounded-xl text-[#54656f] font-semibold'>
                           <span className='line-through text-gray-400 mr-2'>
                             ${hotel.daily_rate.toFixed(2)}

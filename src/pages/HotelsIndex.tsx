@@ -11,7 +11,6 @@ export default function HotelsIndex() {
     }
   }, [hotels, loadHotels]);
 
-  // Deduplicate hotel names per city
   const hotelsByCity = hotels.reduce<Record<string, Set<string>>>(
     (acc, hotel) => {
       if (!acc[hotel.city]) acc[hotel.city] = new Set();

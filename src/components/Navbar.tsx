@@ -17,36 +17,12 @@ export function Navbar() {
 
           {/* Nav Links */}
           <div className='flex gap-6 text-xl font-medium'>
-            {/* <Link
-              to="#"
-              className="relative inline-block after:content-[''] after:block after:w-full after:h-[2px] after:bg-[#e08923] after:absolute after:bottom-0 after:left-0 after:translate-y-2 after:opacity-0 hover:after:opacity-100 transition-all duration-200"
-            >
-              Book Now
-            </Link> */}
-            {/* <Link
-              to="#"
-              className="relative inline-block after:content-[''] after:block after:w-full after:h-[2px] after:bg-[#e08923] after:absolute after:bottom-0 after:left-0 after:translate-y-2 after:opacity-0 hover:after:opacity-100 transition-all duration-200"
-            >
-              How It Works
-            </Link> */}
             <Link
               to='/hotels'
               className="relative inline-block after:content-[''] after:block after:w-full after:h-[2px] after:bg-[#e08923] after:absolute after:bottom-0 after:left-0 after:translate-y-2 after:opacity-0 hover:after:opacity-100 transition-all duration-200"
             >
               Hotels
             </Link>
-            {/* <Link
-              to="#"
-              className="relative inline-block after:content-[''] after:block after:w-full after:h-[2px] after:bg-[#e08923] after:absolute after:bottom-0 after:left-0 after:translate-y-2 after:opacity-0 hover:after:opacity-100 transition-all duration-200"
-            >
-              Groups
-            </Link> */}
-            {/* <Link
-              to="#"
-              className="relative inline-block after:content-[''] after:block after:w-full after:h-[2px] after:bg-[#e08923] after:absolute after:bottom-0 after:left-0 after:translate-y-2 after:opacity-0 hover:after:opacity-100 transition-all duration-200"
-            >
-              Deals
-            </Link> */}
           </div>
         </nav>
 
