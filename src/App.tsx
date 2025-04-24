@@ -7,9 +7,9 @@ function App() {
   return (
     <div className='min-h-screen'>
       <Routes>
-        <Route path='/' element={<HotelsIndex />} />
-        <Route path='/hotels/:id' element={<HotelDetails />} />
-        <Route path='/destinations/:city' element={<DestinationResults />} />
+        <Route path="/" element={<HotelsIndex />} />
+        <Route path="/hotel/:id" element={<HotelDetails />} />
+        <Route path="/travel/destination/:city" element={<DestinationResults />} />
       </Routes>
     </div>
   );
