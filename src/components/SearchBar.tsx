@@ -372,7 +372,7 @@ export function SearchBar() {
         {/* Search Button */}
         <div className='border border-muted-foreground'>
           <Button
-            className='w-full h-full text-muted-foreground hover:text-[#e08923]'
+            className='w-full h-[36px] text-muted-foreground hover:text-[#e08923]'
             onClick={handleSearch}
           >
             Search
