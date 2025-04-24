@@ -1,31 +1,10 @@
 import { useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useHotelStore } from '@/store/useHotelStore';
-import { SearchBar } from '@/components/SearchBar';
-import { format, parseISO } from 'date-fns';
 import { ArrowBigLeft, ArrowBigRight } from 'lucide-react';
 export default function DestinationResults() {
   const { city } = useParams();
   const { hotels, loadHotels, loading } = useHotelStore();
-
-  const search = JSON.parse(localStorage.getItem('search') || '{}');
-  const checkin = search.checkin || '';
-  const checkout = search.checkout || '';
-  const adults = search.adults || '';
-  const children = search.children || '';
-
-  const formattedCheckin = checkin
-    ? format(parseISO(checkin), 'LLL dd, yyyy')
-    : 'Not selected';
-  const formattedCheckout = checkout
-    ? format(parseISO(checkout), 'LLL dd, yyyy')
-    : 'Not selected';
-  const formattedAdults = adults
-    ? `${adults} Adult${adults !== 1 && adults !== '1' ? 's' : ''}`
-    : 'No Adults';
-  const formattedChildren = children
-    ? `${children} Child${children !== 1 && children !== '1' ? 'ren' : ''}`
-    : 'No children';
 
   useEffect(() => {
     loadHotels();
@@ -41,17 +20,12 @@ export default function DestinationResults() {
 
   return (
     <div className='w-full p-4 space-y-6'>
-      {/* <div>
-        <h2 className='text-xl font-bold'>Showing results for: {city}</h2>
-        <p>
-          Dates: {formattedCheckin} – {formattedCheckout}
-        </p>
-        <p>
-          Travelers: {formattedAdults}, {formattedChildren}
-        </p>
-      </div> */}
-      <h2 className='text-[42px] mb-0 text-[#e08923]'>The Best Independent Hotels</h2>
-      <p className='text-[24px] text-muted-foreground'>Earn the most points at the best independent hotels</p>
+      <h2 className='text-[42px] mb-0 text-[#e08923]'>
+        The Best Independent Hotels
+      </h2>
+      <p className='text-[24px] text-muted-foreground'>
+        Earn the most points at the best independent hotels
+      </p>
 
       {loading ? (
         <p>Loading hotels...</p>
@@ -67,9 +41,9 @@ export default function DestinationResults() {
             return (
               <div
                 key={hotel.id}
-                className='relative border rounded-xl shadow flex gap-4 hover:shadow-md transition bg-[#54656f] text-white'
+                className='relative border rounded-xl shadow flex flex-col sm:flex-row hover:shadow-md transition bg-[#54656f] text-white'
               >
-                <div className='relative w-[500px] h-[325px] overflow-hidden rounded group'>
+                <div className='relative w-full md:w-[500px] h-[325px] overflow-hidden rounded group'>
                   <img
                     src={hotel.image}
                     alt={hotel.name}
@@ -93,16 +67,26 @@ export default function DestinationResults() {
                   )}
                 </div>
 
-                <div className='flex flex-col justify-between flex-1 p-4'>
-                  <div>
-                    <h3 className='text-[40px] font-bold'>{hotel.name}</h3>
+                <div className='flex flex-col justify-between flex-1'>
+                  <div className='p-4'>
+                    <h3 className='text-[38px] font-bold leading-10'>
+                      {hotel.name}
+                    </h3>
                     <p className='text-3xl'>{hotel.city}</p>
                     <p className='text-xl mt-2'>
-                      3.8 (1,885 reviews) | 0.1 mi from destination
+                      <span className='text-[#e08923]'>
+                        {(Math.random() * (5.0 - 3.5) + 3.5).toFixed(1)}
+                      </span>{' '}
+                      ({Math.floor(Math.random() * (999 - 50 + 1)) + 50} reviews
+                      ) |{' '}
+                      <span className='text-[#e08923]'>
+                        {(Math.random() * 10).toFixed(1)}
+                      </span>{' '}
+                      mi from destination
                     </p>
                   </div>
                   <div className='mt-2 border-t-2'>
-                    <div className='mt-4 flex items-center justify-between'>
+                    <div className='flex items-center justify-between px-4 py-4'>
                       {hotel.has_member_rate ? (
                         <div className='text-md outline-2 p-2 bg-white outline-[#e08923] rounded-xl text-[#54656f] font-semibold'>
                           <span className='line-through text-gray-400 mr-2'>
@@ -113,8 +97,8 @@ export default function DestinationResults() {
                           </span>
                         </div>
                       ) : (
-                        <div className='text-2xl font-semibold'>
-                          ${price} / night
+                        <div className='text-2xl font-semibold  outline-2 p-2 bg-white text-[#e08923] outline-[#e08923] rounded-xl'>
+                          ${price}
                         </div>
                       )}
                       <Link
