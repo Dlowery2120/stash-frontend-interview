@@ -99,14 +99,20 @@ export function SearchBar() {
   const highlightMatch = (label: string) => {
     const index = label.toLowerCase().indexOf(query.toLowerCase())
     if (index === -1) return label
+  
+    const before = label.slice(0, index)
+    const match = label.slice(index, index + query.length)
+    const after = label.slice(index + query.length)
+  
     return (
-      <>
-        {label.slice(0, index)}
-        <span className="font-bold">{label.slice(index, index + query.length)}</span>
-        {label.slice(index + query.length)}
-      </>
+      <span>
+        {before}
+        <span className="font-bold">{match}</span>
+        {after}
+      </span>
     )
   }
+  
 
   const handleSearch = async () => {
     if (!selectedOption || !date?.from || !date?.to) return
@@ -163,11 +169,10 @@ export function SearchBar() {
   }
 
   return (
-    <div className="space-y-4 border p-4 rounded-lg shadow-sm bg-white">
+    <div className="space-y-4 bg-white">
       <div className="grid md:grid-cols-4 gap-4 items-center">
         {/* Destination combobox */}
-        <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium">Destination</label>
+        <div className="flex flex-col gap-1 border border-muted-foreground">
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button variant="outline" role="combobox" className="w-full justify-between">
@@ -240,8 +245,7 @@ export function SearchBar() {
         </div>
 
         {/* Date Range Picker */}
-        <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium">Dates</label>
+        <div className="flex flex-col gap-1 border border-muted-foreground">
           <Popover>
             <PopoverTrigger asChild>
               <Button variant="outline" className={cn('w-full justify-start text-left font-normal', !date && 'text-muted-foreground')}>
@@ -271,8 +275,7 @@ export function SearchBar() {
         </div>
 
         {/* Travelers */}
-        <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium">Travelers</label>
+        <div className="flex flex-col gap-1 border border-muted-foreground">
           <Popover>
             <PopoverTrigger asChild>
               <Button variant="outline" className="w-full justify-between">
@@ -302,8 +305,8 @@ export function SearchBar() {
         </div>
 
         {/* Search Button */}
-        <div className="mt-6 md:mt-0">
-          <Button className="w-full h-full" onClick={handleSearch}>
+        <div className="border border-muted-foreground">
+          <Button className="w-full h-full text-muted-foreground hover:text-[#e08923]" onClick={handleSearch}>
             Search
           </Button>
         </div>
