@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import HotelsIndex from './pages/HotelsIndex';
 import HotelDetails from './pages/HotelDetails';
 import DestinationResults from './pages/DestinationResults';
@@ -12,6 +12,7 @@ function App() {
       <main className='flex justify-center px-4'>
         <div className='w-full max-w-7xl'>
           <Routes>
+            <Route path='/' element={<Navigate to="/hotels" replace />} />
             <Route path='/hotels' element={<HotelsIndex />} />
             <Route path='/hotel/:id' element={<HotelDetails />} />
             <Route
