@@ -49,30 +49,43 @@ export function SearchBar() {
   }
 
   React.useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const { latitude, longitude } = position.coords
-        try {
-          const res = await fetch(
-            `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}&api_key=${API_KEY}`
-          )
-          const data = await res.json()
-          const city =
-            data.address.city ||
-            data.address.town ||
-            data.address.village ||
-            data.address.state
-          if (city && destinations.includes(city)) {
-            setNearbyCity(city)
-            setSelectedOption({ label: city, value: city, type: 'city' })
-          }
-        } catch (err) {
-          console.error('Failed to detect location:', err)
-        }
-      },
-      (err) => console.error('Geolocation error:', err)
-    )
-  }, [])
+    const savedSearch = JSON.parse(localStorage.getItem('search') || '{}')
+  
+    if (savedSearch) {
+      // Set adults/children
+      if (savedSearch.adults) setAdults(savedSearch.adults)
+      if (savedSearch.children) setChildren(savedSearch.children)
+  
+      // Set dates
+      if (savedSearch.checkin && savedSearch.checkout) {
+        setDate({
+          from: new Date(savedSearch.checkin),
+          to: new Date(savedSearch.checkout),
+        })
+      }
+  
+      // Set selected destination option
+      const matchHotel = hotels.find((h) => h.name === savedSearch.searchValue)
+      const matchCity = destinations.find(
+        (c) => c.toLowerCase() === savedSearch.city?.toLowerCase()
+      )
+  
+      if (matchHotel) {
+        setSelectedOption({
+          label: `${matchHotel.name}, ${matchHotel.city}`,
+          value: matchHotel.name,
+          type: 'hotel',
+        })
+      } else if (matchCity) {
+        setSelectedOption({
+          label: matchCity,
+          value: matchCity,
+          type: 'city',
+        })
+      }
+    }
+  }, [hotels, destinations])
+  
 
   const hotelOptions = hotels.map((h) => ({
     value: h.name,
